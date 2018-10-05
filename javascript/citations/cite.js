@@ -2,6 +2,7 @@
 //TODO cite access dates
 //TODO italics and Times New Roman 12 pt double spaced
 //TODO page margins
+//TODO -1 = undated
 
 function leadingZero(input, spaces) {
 	if (input.length < spaces) {
@@ -38,15 +39,38 @@ function authChange() {
 
 }
 
+function createName(name, ord) {
+	if (name[1] == '') {
+		return name[0];
+	}
+
+	if (ord == 1) {
+		return name[1] + ', ' + name[0];
+	} else {
+		return name[0] + ' ' + name[1];
+	}
+}
+
+function createInText(name) {
+	if (name[1] == '') {
+		return name[0]
+	} else {
+		return name[1]
+	}
+}
+
 function cite() {
 	let authNum = document.getElementById('authNum').value;
 
+	var name1 = createName([document.getElementById('firstName1').value, document.getElementById('lastName1').value], 1)
+	var name2 = createName([document.getElementById('firstName2').value, document.getElementById('lastName2').value], 2)
+
 	if (authNum > 2) {
-		var auth = document.getElementById('lastName1').value + ', ' + document.getElementById('firstName1').value + ' et al. ';
+		var auth = name1 + ' et al. ';
 	} else if (authNum == 2) {
-		var auth = document.getElementById('lastName1').value + ', ' + document.getElementById('firstName1').value + ', and ' + document.getElementById('firstName2').value + ' ' + document.getElementById('lastName2').value + '. '
+		var auth = name1 + ', and ' + name2 + '. '
 	} else if (authNum == 1) {
-		var auth = document.getElementById('lastName1').value + ', ' + document.getElementById('firstName1').value + '. ';
+		var auth = name1 + '. ';
 	} else {
 		var auth = ''
 	}
@@ -75,12 +99,15 @@ function cite() {
 
 	document.getElementById('citation').innerText = auth + article + website + pubDate + url + accessDate + '.';
 
+	inText1 = createInText([document.getElementById('firstName1').value, document.getElementById('lastName1').value]);
+	inText2 = createInText([document.getElementById('firstName2').value, document.getElementById('lastName2').value]);
+
 	if (authNum == 1) {
-		var inTextCite = document.getElementById('lastName1').value
+		var inTextCite = inText1;
 	} else if (authNum == 2) {
-		var inTextCite = document.getElementById('lastName1').value + ', and ' + document.getElementById('lastName2').value
+		var inTextCite = inText1 + ', and ' + inText2
 	} else if (authNum > 2) {
-		var inTextCite = document.getElementById('lastName1').value + ' et al.';
+		var inTextCite = inText1 + ' et al.';
 	} else {
 		var inTextCite = '"' + document.getElementById('article').value + '"';
 	}
