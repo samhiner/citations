@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+	body {
+		font-family: sans-serif;
+	}
+</style>
+</head>
 <body>
-	<input type='number' value='Number of Authors' placeholder='0' onkeypress='authChange()' id='authNum'><br><br>
+	Number of Authors: <input type='number' value='1' onkeyup='authChange()' onclick='authChange()' id='authNum'><br><br>
 	<div id='auth1'>
-		<input type='text' id='firstName1'>
-		<input type='text' id='lastName1'>
+		<input type='text' id='firstName1' placeholder='First Name'>
+		<input type='text' id='lastName1' placeholder='Last Name'>
 	</div><br>
-	<div id='auth2'>
-		<input type='text' id='firstName2'>
-		<input type='text' id='lastName2'>
+	<div id='auth2' style='display: none;'>
+		<input type='text' id='firstName2' placeholder='First Name'>
+		<input type='text' id='lastName2' placeholder='Last Name'>
 	</div><br><br>
 
 
-	Year Published<input type='number' id='pubYear'><br> <!--TODO -1 for no date code and say-->
-	Article Title<input type='text' id='article'><br>
-	Website Name<input type='text' id='website'><br>
-	Publisher<input type='text' id='publisher'><br>
-	URL<input type='text' id='url'><br>
+	Year Published: <input type='number' id='pubYear' value='2018'><br> <!--TODO -1 for no date code and say-->
+	Article Title: <input type='text' id='article'><br>
+	Website Name: <input type='text' id='website'><br>
+	Publisher: <input type='text' id='publisher'><br>
+	URL: <input type='text' id='url'><br>
 	Access Date: <input type='date' id='accessDate'><br><br>
 
 
-	<button onclick='cite()'>Submit</button>
+	<button onclick='cite()'>Cite It!</button><br><br><br>
 
-	<script></script>
+	<span id='in-text'>s</span><br><br>
+
+	<span id='citation'>d</span>
+
+	<script src='cite.js'></script>
 </body>
 </html>
