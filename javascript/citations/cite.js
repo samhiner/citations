@@ -77,7 +77,7 @@ function cite() {
 
 	var article = '"' + document.getElementById('article').value + '". ';
 
-	var website = document.getElementById('website').value + ', '
+	var website = '<span class="website">' + document.getElementById('website').value + '</span>, '
 
 	if (document.getElementById('pubYear') == -1) {
 		var pubDate = '';
@@ -97,7 +97,7 @@ function cite() {
 
 	var accessDate = 'Accessed ' + accessDate[2] + ' ' + months[accessDate[1] - 1] + ' ' + accessDate[0];
 
-	document.getElementById('citation').innerText = auth + article + website + pubDate + url + accessDate + '.';
+	document.getElementById('citation').innerHTML = auth + article + website + pubDate + url + accessDate + '.';
 
 	inText1 = createInText([document.getElementById('firstName1').value, document.getElementById('lastName1').value]);
 	inText2 = createInText([document.getElementById('firstName2').value, document.getElementById('lastName2').value]);
@@ -112,7 +112,7 @@ function cite() {
 		var inTextCite = '"' + document.getElementById('article').value + '"';
 	}
 
-	document.getElementById('in-text').innerText = '(' + inTextCite + ')';
+	document.getElementById('in-text').innerHTML = '(' + inTextCite + ')';
 }
 
 onStart();
