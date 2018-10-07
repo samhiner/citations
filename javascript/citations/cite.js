@@ -2,7 +2,6 @@
 //TODO cite access dates
 //TODO italics and Times New Roman 12 pt double spaced
 //TODO page margins
-//TODO -1 = undated
 
 function leadingZero(input, spaces) {
 	if (input.length < spaces) {
@@ -79,7 +78,7 @@ function cite() {
 
 	var website = '<span class="website">' + document.getElementById('website').value + '</span>, '
 
-	if (document.getElementById('pubYear') == -1) {
+	if (document.getElementById('pubYear').value == -1) {
 		var pubDate = '';
 	} else {
 		var pubDate = document.getElementById('pubYear').value + ', ';
@@ -89,13 +88,13 @@ function cite() {
 
 	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
-	var accessDate = document.getElementById('accessDate').value.split('-')
+	var rawAccessDate = document.getElementById('accessDate').value.split('-')
 
-	while (String(accessDate[2])[0] == '0') {
-		accessDate[2] = accessDate[2].substr(1);
+	while (String(rawAccessDate[2])[0] == '0') {
+		rawAccessDate[2] = rawAccessDate[2].substr(1);
 	}
 
-	var accessDate = 'Accessed ' + accessDate[2] + ' ' + months[accessDate[1] - 1] + ' ' + accessDate[0];
+	var accessDate = 'Accessed ' + rawAccessDate[2] + ' ' + months[rawAccessDate[1] - 1] + ' ' + rawAccessDate[0];
 
 	document.getElementById('citation').innerHTML = auth + article + website + pubDate + url + accessDate + '.';
 
