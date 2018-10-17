@@ -78,6 +78,12 @@ function cite() {
 
 	var website = '<span class="website">' + document.getElementById('website').value + '</span>, '
 
+	var publisher = document.getElementById('publisher').value + ', '
+
+	if (document.getElementById('publisher').value == document.getElementById('website').value) {
+		publisher = ''
+	}
+
 	if (document.getElementById('pubYear').value == -1) {
 		var pubDate = '';
 	} else {
@@ -96,7 +102,7 @@ function cite() {
 
 	var accessDate = 'Accessed ' + rawAccessDate[2] + ' ' + months[rawAccessDate[1] - 1] + ' ' + rawAccessDate[0];
 
-	document.getElementById('citation').innerHTML = auth + article + website + pubDate + url + accessDate + '.';
+	document.getElementById('citation').innerHTML = auth + article + website + publisher + pubDate + url + accessDate + '.';
 
 	inText1 = createInText([document.getElementById('firstName1').value, document.getElementById('lastName1').value]);
 	inText2 = createInText([document.getElementById('firstName2').value, document.getElementById('lastName2').value]);
