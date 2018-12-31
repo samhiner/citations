@@ -9,7 +9,8 @@
 from newspaper import Article
 
 #TODO get the url with Flask
-url = 'https://www.scmp.com/infographics/article/1862273/infographic-tale-two-economies'
+url = 'http://www.bloomberg.com/news/articles/2016-05-24/as-zenefits-stumbles-gusto-goes-head-on-by-selling-insurance'
+url = 'https://commons.wikimedia.org/wiki/File:%E7%8E%AF%E5%A4%AA%E5%B9%B3%E6%B4%8B%E5%9C%B0%E5%8C%BA.svg'
 
 article = Article(url)
 article.download()
@@ -22,3 +23,7 @@ print('WEBSITE NAME')
 print('PUBLISHER')
 print(url)
 print('2018-12-30')
+
+#Newspaper TODO
+#Set limits on stuff like authors to squeeze out speed - Bottom of https://newspaper.readthedocs.io/en/latest/user_guide/advanced.html#adding-new-languages
+#Figure out how to do multithreading for two clients so the site doesn't get destroyed if it grows - https://github.com/codelucas/newspaper/blob/master/docs/user_guide/advanced.rst

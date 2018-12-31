@@ -4,7 +4,10 @@
 //TODO take everything after the filepath out of urls? (cleaner but could mess up sites reliant on jquery)
 //TODO find that bug from a while ago where there were two commas when you didn't add some optional info
 //TODO refactor everything below
-//TODO add input validation
+//TODO add input validation (means make sure all areas are filled and it doesn't have unpredictable behavior when users do weird things)
+//TODO make sure that people can't hack the site through the URL submit with XSS or something
+//TODO turn url into escape codes before giving it to server
+//TODO Collect data on what percent of AutoCite's are successful
 
 function leadingZero(input, spaces) {
 	if (input.length < spaces) {
