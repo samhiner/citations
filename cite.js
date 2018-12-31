@@ -1,7 +1,10 @@
-//TODO comment all of this lol
-//TODO cite access dates
-//TODO italics and Times New Roman 12 pt double spaced
-//TODO page margins
+//TODO add documentation
+//TODO double spaced and page margins (maybe a document outline)
+
+//TODO take everything after the filepath out of urls? (cleaner but could mess up sites reliant on jquery)
+//TODO find that bug from a while ago where there were two commas when you didn't add some optional info
+//TODO refactor everything below
+//TODO add input validation
 
 function leadingZero(input, spaces) {
 	if (input.length < spaces) {
@@ -67,21 +70,21 @@ function cite() {
 	if (authNum > 2) {
 		var auth = name1 + ' et al. ';
 	} else if (authNum == 2) {
-		var auth = name1 + ', and ' + name2 + '. '
+		var auth = name1 + ', and ' + name2 + '. ';
 	} else if (authNum == 1) {
 		var auth = name1 + '. ';
 	} else {
-		var auth = ''
+		var auth = '';
 	}
 
 	var article = '"' + document.getElementById('article').value + '". ';
 
-	var website = '<span class="website">' + document.getElementById('website').value + '</span>, '
+	var website = '<span class="website">' + document.getElementById('website').value + '</span>, ';
 
-	var publisher = document.getElementById('publisher').value + ', '
+	var publisher = document.getElementById('publisher').value + ', ';
 
 	if (document.getElementById('publisher').value == document.getElementById('website').value) {
-		publisher = ''
+		publisher = '';
 	}
 
 	if (document.getElementById('pubYear').value == -1) {
@@ -110,7 +113,7 @@ function cite() {
 	if (authNum == 1) {
 		var inTextCite = inText1;
 	} else if (authNum == 2) {
-		var inTextCite = inText1 + ', and ' + inText2
+		var inTextCite = inText1 + ', and ' + inText2;
 	} else if (authNum > 2) {
 		var inTextCite = inText1 + ' et al.';
 	} else {
