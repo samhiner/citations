@@ -1,0 +1,16 @@
+.hintText {
+	display: none;
+	position: absolute;
+	background-color: #bbb;
+}
+.tooltip {
+	border-radius: 50%;
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	background-color: #bbb;
+	text-align: center;
+}
+.tooltip:hover .hintText {
+	display: block;
+}
