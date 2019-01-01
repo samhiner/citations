@@ -1,13 +1,14 @@
-//TODO add documentation
-//TODO double spaced and page margins (maybe a document outline)
-
-//TODO take everything after the filepath out of urls? (cleaner but could mess up sites reliant on jquery)
-//TODO find that bug from a while ago where there were two commas when you didn't add some optional info
 //TODO refactor everything below
-//TODO add input validation (means make sure all areas are filled and it doesn't have unpredictable behavior when users do weird things)
-//TODO make sure that people can't hack the site through the URL submit with XSS or something
+	//TODO add documentation
+	//TODO add input validation (means make sure all areas are filled and it doesn't have unpredictable behavior when users do weird things)
+		//TODO find that bug from a while ago where there were two commas when you didn't add some optional info
+	//TODO make sure that people can't hack the site through the URL submit with XSS or something
+//TODO double spaced and page margins (maybe a document outline)
+	//TODO Analyze google docs to find out how they define margins in html and copy that for the citation output to see if it copies over to drive
 //TODO turn url into escape codes before giving it to server
+	//TODO should I convert it back to plain text for URL part of citation?
 //TODO Collect data on what percent of AutoCite's are successful
+//figure out n.p.
 
 function leadingZero(input, spaces) {
 	if (input.length < spaces) {
