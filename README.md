@@ -1,5 +1,8 @@
 ## Citations
 
+### Situation
+- My publishing thing works very well for the few sites I tested it on. However, 
+
 ### Errors
 - For Reuters, it gives "U.S." (or other country prob) for website name
 	- https://www.reuters.com/article/us-usa-shutdown/democrats-maneuver-to-end-shutdown-without-trump-wall-money-idUSKCN1OU0WE

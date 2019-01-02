@@ -1,6 +1,4 @@
-//UPDATE metascraper is much more versatile for things like non-articles so I am using
-//it over newspaper3k. All I will have to get is the publisher, which should be pretty
-//easy. Also metascraper is way faster
+// LIBRARY IMPORTS
 
 const got = require('got');
 const metascraper = require('metascraper')([
@@ -13,6 +11,8 @@ const metascraper = require('metascraper')([
 
 console.time('Runtime');
 
+// GET CITATION DATA
+
 //TODO reject invalid urls to speed up process?
 const targetUrl = 'https://500px.com/photo/95611289/one-new-york-plaza-new-york-city-ny-by-oliver-hannak';
 
@@ -20,7 +20,6 @@ const targetUrl = 'https://500px.com/photo/95611289/one-new-york-plaza-new-york-
 	const {body: html, url} = await got(targetUrl)
 	const metadata = await metascraper({html, url})
 
-	//console.log(html)
 
 	//TODO if null end process
 
@@ -32,35 +31,98 @@ const targetUrl = 'https://500px.com/photo/95611289/one-new-york-plaza-new-york-
 	console.log('Article Title:', metadata.title);
 	//The thing that metascraper calls publisher is an MLA website title
 	console.log('Website Name:', metadata.publisher);
-	console.log('Publisher:', null);
+	console.log('Publisher:', getPublisher(html));
 	console.log('URL:', metadata.url);
 
 	console.timeEnd('Runtime');
 })();
 
+// GETTING PUBLISHER
 
-var string = 'yo wass hello my name is hello sam';
-
-console.log(string.lastIndexOf('hello'))
 function getPublisher(html) {
-	var keywords = ['©', '&copy', 'Copyright'];
+	var index = publisherStartIndex(html);
+	//TODO change this so it runs again at different index or something (maybe do running from different index int he other function or make a function handler between this and that one)
+	while (index == -1) {
+		return '';
+	}
+	var startIndex = index;
 	var publisher = '';
-	var copyrightPos;
-	var tagMode;
+	var tagMode = false;
+	var bracketMode = false;
+	var nestLevel = 0;
 
-	//TODO prolly best to do 2 for loops one for starting one for stopping
-	for (keyword in keywords) {
+	while (index < html.length && index - startIndex < 300) { //TODO decide if keep 300 limit and if so add it to pubStart
+		if (!tagMode && !bracketMode) {
+			if (['.', '>', '"', '\n'].indexOf(html[index].toLowerCase()) == -1 && !indexStartsWord('all rights reserved', index, html)) {
+				//TODO could break with <span id="hello>sdsd">
+				if (html[index] != '<') {
+					//TODO same as above comment
+					if (html.slice(index, index + 2) != '{{') {
+						publisher += html[index];
+					} else {
+						bracketMode = true;
+						index += 1;
+					}
+				} else {
+					if (html[index + 1] == '/') {
+						nestLevel -= 1;
+						if (nestLevel < 0) {
+							return publisher;
+						}
+					} else {
+						nestLevel += 1
+					}
+
+					tagMode = true;
+				}
+			} else {
+				return publisher
+			}
+		} else if (tagMode) {
+			if (html[index] == '>') {
+				tagMode = false;
+			}
+		} else if (bracketMode) {
+			if (html.slice(index, index + 2) == '}}') {
+				bracketMode = false;
+			}
+		}
+		index += 1
+	}
+}
+
+//TODO heavily refactor
+//PROBLEM must communicate if first © didn't work, try the next one etc. Maybe do a searchFrom parameter for publisherStartIndex()
+function publisherStartIndex(html) {
+	var keywords = ['©', '&copy', 'Copyright'];
+	var copyrightPos;
+	var tagMode = false;
+	var bracketMode = false;
+
+	for (x in keywords) {
+		keyword = keywords[x];
 		copyrightPos = html.lastIndexOf(keyword)
 		if (copyrightPos != -1) {
 			var index = copyrightPos + keyword.length
-			while (a) {
+
+			if (keyword == '&copy' && html[index] == ';') {
+				index += 1;
+			}
+
+			while (index < html.length) {
 				if (!tagMode && !bracketMode) {
-					if ([' ', '-', 'by', 'copyright', '.'].indexOf(html[index].toLowerCase()) == -1) {
+					if ([' ', '-', '.', '©'].indexOf(html[index].toLowerCase()) == -1 && !indexStartsWord('by', index, html) && !indexStartsWord('copyright', index, html)) {
 						//if it is not a year
-						if (html.slice(index, index + 4).isNaN()) {
+						if (isNaN(html.slice(index, index + 4))) {
 							//TODO could break with <span id="hello>sdsd">
 							if (html[index] != '<') {
-								then {{}}
+								//TODO same as above comment
+								if (html.slice(index, index + 2) != '{{') {
+									return index;
+								} else {
+									bracketMode = true;
+									index += 1;
+								}
 							} else {
 								tagMode = true;
 							}
@@ -68,42 +130,38 @@ function getPublisher(html) {
 							//only do 3 and not 4 for the length of a year (e.g. 2019), because everything gets added by 1 at the end of the round
 							index += 3;
 						}
+					} else {
+						if (indexStartsWord('by', index, html)) {
+							index += 1;
+						} else if (indexStartsWord('copyright', index, html)) {
+							index += 8;
+						}
 					}
 				} else if (tagMode) {
 					if (html[index] == '>') {
 						tagMode = false;
 					}
 				} else if (bracketMode) {
-
+					if (html.slice(index, index + 2) == '}}') {
+						bracketMode = false;
+					}
 				}
 				index += 1
 			}
 		}
 	}
-
-	if (publisher != '') {
-
-	}
+	return -1;
 }
 
-///PUBLISHER
-//TODO convert &amp in title to right thing and eval other html
-/*
-find ©
-find &copy
-find Copyright (case specific)
-
-All the while:
-	if the keyword isn't 'Copyright':
-		as you are iterating over chars after keyword ignore stuff in tags
-		so basically just get the first non tag/'Copyright'/year/-/'by'/space/'.'/{{x}} data
-			if you are using '&copy' make sure to ignore a ; after the '&copy'
-		stop when you see '.'/'"'/tag end if no new tags began in title
-	else:
-		same just ignore year
-
-
-
-for x:
-	if numeric:
-		check to see if a year/year range (should be len 4/2 or 4/4 or 4)*/
+//check to see if the index is at the start of the defined word
+function indexStartsWord(word, index, html) {
+	if (index + word.legnth < html.length) {
+		if (html.slice(index, index + word.length).toLowerCase() == word) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}

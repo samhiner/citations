@@ -8,7 +8,7 @@
 //TODO turn url into escape codes before giving it to server
 	//TODO should I convert it back to plain text for URL part of citation?
 //TODO Collect data on what percent of AutoCite's are successful
-//figure out n.p.
+//TODO figure out n.p.
 
 function leadingZero(input, spaces) {
 	if (input.length < spaces) {
