@@ -13,9 +13,6 @@
 			font-family: 'Times New Roman', serif;
 			font-size: 1pc;
 		}
-		.website {
-			font-style: italic;
-		}
 	</style>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -23,21 +20,21 @@
 <body>
 	Info: For authors, only include first name for a username and for the year published put -1 for undated.<br><br>
 
-	Number of Authors: <input type='number' value='1' onkeyup='authorChange()' onclick='authorChange()' id='authorNum'><br><br>
-	<div id='auth1'>
-		<input type='text' id='firstName1' placeholder='First Name'>
-		<input type='text' id='lastName1' placeholder='Last Name'>
+	Number of Authors: <input type='number' value='1' onkeyup='authorChange()' onclick='authorChange()' id='numAuthors'><br><br>
+	<div id='author1'>
+		<input type='text' id='firstName1' placeholder='First Name' value='John'>
+		<input type='text' id='lastName1' placeholder='Last Name' value='Smith'>
 	</div><br>
-	<div id='auth2' style='display: none;'>
-		<input type='text' id='firstName2' placeholder='First Name'>
-		<input type='text' id='lastName2' placeholder='Last Name'>
+	<div id='author2' style='display: none;'>
+		<input type='text' id='firstName2' placeholder='First Name' value='Jan'>
+		<input type='text' id='lastName2' placeholder='Last Name' value='Fedora'>
 	</div><br><br>
 
-	Year Published: <input type='number' id='pubYear'><br>
-	Article Title: <input type='text' id='article'><br>
-	Website Name: <input type='text' id='website'><br>
-	Publisher: <input type='text' id='publisher'><br>
-	URL: <input type='text' id='url'><br>
+	Year Published: <input type='number' id='pubYear' value='2011'><br>
+	Article Title: <input type='text' id='article' value='TPP Is A Big Deal, With Or Without The U.S.'><br>
+	Website Name: <input type='text' id='website' value='Bloomberg'><br>
+	Publisher: <input type='text' id='publisher' value='News Inc.'><br>
+	URL: <input type='text' id='url' value='bloomberg.com'><br>
 	Access Date: <input type='date' id='accessDate'><br><br>
 
 	<button onclick='cite()'>Cite It!</button><br><br><br>
