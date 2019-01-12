@@ -9,8 +9,6 @@ const metascraper = require('metascraper')([
 	require('metascraper-url')()
 ]);
 
-console.time('Runtime');
-
 // GET CITATION DATA
 
 //TODO reject invalid urls to speed up process?
@@ -20,21 +18,15 @@ const targetUrl = 'https://500px.com/photo/95611289/one-new-york-plaza-new-york-
 	const {body: html, url} = await got(targetUrl)
 	const metadata = await metascraper({html, url})
 
-
-	//TODO if null end process
-
-	console.log('Author(s):', metadata.author);
-	if (metadata.date != null) { //NOTE temporary measure
-		console.log('Pub Year:', metadata.date.split('-')[0]);
+	citationInfo = {
+		metadata.author = metadata.date == null ? null : metadata.date.split('-')[0]);
+		article: metadata.title,
+		//The thing that metascraper calls publisher is an MLA website title
+		website: metadata.publisher,
+		publisher: getPublisher(html),
+		url: metadata.url
 	}
 
-	console.log('Article Title:', metadata.title);
-	//The thing that metascraper calls publisher is an MLA website title
-	console.log('Website Name:', metadata.publisher);
-	console.log('Publisher:', getPublisher(html));
-	console.log('URL:', metadata.url);
-
-	console.timeEnd('Runtime');
 })();
 
 // GETTING PUBLISHER
@@ -85,6 +77,7 @@ function getPublisher(html) {
 		} else if (bracketMode) {
 			if (html.slice(index, index + 2) == '}}') {
 				bracketMode = false;
+				index += 1;
 			}
 		}
 		index += 1
@@ -144,6 +137,7 @@ function publisherStartIndex(html) {
 				} else if (bracketMode) {
 					if (html.slice(index, index + 2) == '}}') {
 						bracketMode = false;
+						index += 1;
 					}
 				}
 				index += 1
